@@ -10,6 +10,8 @@ echo "Extracting entire archive to ${TEMP_DIR}..."
 mkdir -p $TEMP_DIR
 tar --xz -xf $ARCHIVE -C $TEMP_DIR
 
+ls $TEMP_DIR
+
 # Step 2: Format XML and Open in VSCode
 echo "Formatting ${XML_FILE}..."
 cp "${TEMP_DIR}/${XML_FILE}" "${TEMP_DIR}/formatted.xml"
@@ -26,10 +28,9 @@ read -p "Press any key to continue after editing..."
 echo "Re-creating ${ARCHIVE}..."
 rm $ARCHIVE
 (cd $TEMP_DIR && tar --xz -cf ../$(basename $ARCHIVE) *)
+(cd $TEMP_DIR  && cd .. && mv $(basename $ARCHIVE) $ARCHIVE)
 
 # Clean-up
 rm -r $TEMP_DIR
-
-mv $(basename $ARCHIVE) $ARCHIVE
 
 echo "Done."
